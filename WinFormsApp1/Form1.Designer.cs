@@ -30,21 +30,18 @@
         {
             components = new System.ComponentModel.Container();
             timer1 = new System.Windows.Forms.Timer(components);
-            label1 = new Label();
             label2 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            comboBox1 = new ComboBox();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            button1 = new Button();
             button2 = new Button();
             textBox5 = new TextBox();
             pictureBox1 = new PictureBox();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            label1 = new Label();
+            log = new Label();
+            listBox2 = new ListBox();
+            button1 = new Button();
+            button3 = new Button();
+            label3 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -54,158 +51,143 @@
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
-            // label1
-            // 
-            label1.BackColor = SystemColors.ActiveBorder;
-            label1.BorderStyle = BorderStyle.Fixed3D;
-            label1.Location = new Point(12, 37);
-            label1.Name = "label1";
-            label1.Size = new Size(57, 16);
-            label1.TabIndex = 1;
-            label1.Text = "0";
-            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 9);
+            label2.Location = new Point(14, 9);
             label2.Name = "label2";
-            label2.Size = new Size(57, 15);
+            label2.Size = new Size(65, 20);
             label2.TabIndex = 2;
-            label2.Text = "Run Time";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(12, 109);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 3;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(12, 153);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 4;
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new Point(12, 197);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(100, 23);
-            textBox3.TabIndex = 5;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(12, 241);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(100, 23);
-            textBox4.TabIndex = 6;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Cost per meter", "Full cost" });
-            comboBox1.Location = new Point(118, 153);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 8;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(12, 91);
-            label3.Name = "label3";
-            label3.Size = new Size(27, 15);
-            label3.TabIndex = 9;
-            label3.Text = "Size";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(12, 135);
-            label4.Name = "label4";
-            label4.Size = new Size(31, 15);
-            label4.TabIndex = 10;
-            label4.Text = "Cost";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(12, 179);
-            label5.Name = "label5";
-            label5.Size = new Size(42, 15);
-            label5.TabIndex = 11;
-            label5.Text = "Owner";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(12, 223);
-            label6.Name = "label6";
-            label6.Size = new Size(23, 15);
-            label6.TabIndex = 12;
-            label6.Text = "pH";
-            // 
-            // button1
-            // 
-            button1.Location = new Point(12, 270);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 13;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            label2.Text = "Up Time";
             // 
             // button2
             // 
-            button2.Location = new Point(12, 433);
+            button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            button2.Location = new Point(5, 531);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(95, 177);
             button2.TabIndex = 14;
-            button2.Text = "button2";
+            button2.Text = "Perform OCR";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(329, 415);
+            textBox5.Location = new Point(106, 531);
+            textBox5.Margin = new Padding(3, 4, 3, 4);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(227, 128);
+            textBox5.RightToLeft = RightToLeft.No;
+            textBox5.Size = new Size(758, 177);
             textBox5.TabIndex = 15;
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(270, 54);
+            pictureBox1.BorderStyle = BorderStyle.Fixed3D;
+            pictureBox1.Location = new Point(106, 12);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(333, 338);
+            pictureBox1.Size = new Size(1195, 511);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 16;
             pictureBox1.TabStop = false;
             // 
+            // backgroundWorker1
+            // 
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // label1
+            // 
+            label1.BackColor = SystemColors.ActiveBorder;
+            label1.BorderStyle = BorderStyle.Fixed3D;
+            label1.Location = new Point(14, 29);
+            label1.Name = "label1";
+            label1.Size = new Size(65, 21);
+            label1.TabIndex = 1;
+            label1.Text = "0";
+            // 
+            // log
+            // 
+            log.Location = new Point(870, 527);
+            log.Name = "log";
+            log.Size = new Size(40, 34);
+            log.TabIndex = 17;
+            log.Text = "Logs";
+            // 
+            // listBox2
+            // 
+            listBox2.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            listBox2.FormattingEnabled = true;
+            listBox2.ItemHeight = 18;
+            listBox2.Location = new Point(870, 544);
+            listBox2.Name = "listBox2";
+            listBox2.RightToLeft = RightToLeft.No;
+            listBox2.Size = new Size(431, 148);
+            listBox2.TabIndex = 19;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(5, 211);
+            button1.Name = "button1";
+            button1.Size = new Size(97, 58);
+            button1.TabIndex = 20;
+            button1.Text = "Point 1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(5, 310);
+            button3.Name = "button3";
+            button3.Size = new Size(97, 58);
+            button3.TabIndex = 21;
+            button3.Text = "Point 2";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // label3
+            // 
+            label3.BorderStyle = BorderStyle.Fixed3D;
+            label3.Location = new Point(5, 173);
+            label3.Name = "label3";
+            label3.Size = new Size(97, 35);
+            label3.TabIndex = 22;
+            label3.Text = "0;0";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            label4.BorderStyle = BorderStyle.Fixed3D;
+            label4.Location = new Point(5, 272);
+            label4.Name = "label4";
+            label4.Size = new Size(97, 35);
+            label4.TabIndex = 23;
+            label4.Text = "0;0";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(627, 640);
+            ClientSize = new Size(1313, 713);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(button3);
+            Controls.Add(button1);
+            Controls.Add(listBox2);
+            Controls.Add(log);
             Controls.Add(pictureBox1);
             Controls.Add(textBox5);
             Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(comboBox1);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(label1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             RightToLeft = RightToLeft.Yes;
             Text = "Form1";
+            TopMost = true;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -214,20 +196,17 @@
         #endregion
 
         private System.Windows.Forms.Timer timer1;
-        private Label label1;
         private Label label2;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private ComboBox comboBox1;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Button button1;
         private Button button2;
         private TextBox textBox5;
         private PictureBox pictureBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Label label1;
+        private Label log;
+        private ListBox listBox2;
+        private Button button1;
+        private Button button3;
+        private Label label3;
+        private Label label4;
     }
 }

@@ -1,25 +1,19 @@
+using System.ComponentModel;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Text.Json;
 using Tesseract;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Reflection;
 
 namespace WinFormsApp1
 {
     public partial class Form1 : Form
     {
-        int Size;
-        int Cost;
-        int CostPerMeter;
-        string Owner = "";
-        double pH;
-        int count = 0;
-        const string filePath = "C:\\Users\\it-krystofstudnicka\\source\\repos\\WinFormsApp1\\WinFormsApp1\\Fields.json";
-
-        List<Field> Fields = new List<Field>();
-
+        private int count = 0;
+        private bool capturing = false;
+        private bool capturing2 = false;
+        private Point capturedPosition;
+        private int x;
+        private int y;
+        private int width = 1;
+        private int height = 1;
         public Form1()
         {
             InitializeComponent();
@@ -29,46 +23,11 @@ namespace WinFormsApp1
         {
             label1.Text = count++.ToString();
         }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selectedIndex = comboBox1.SelectedIndex;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedIndex == 0)
-            { //cost per meter 
-                try
-                {
-                    Size = Convert.ToInt32(textBox1.Text);
-                    CostPerMeter = Convert.ToInt32(textBox2.Text);
-                    Owner = textBox3.Text;
-                    pH = Convert.ToDouble(textBox4.Text);
-                    Cost = CostPerMeter * Size;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                Field field = new Field(Owner, Size, CostPerMeter, pH);
-                Fields.Add(field);
-                foreach (Field field2 in Fields)
-                {
-                    File.WriteAllText(filePath, ToString(field2));
-                }
-            }
-        }
-        public string ToString(Field field)
-        {
-            return $"{field.Size};{field.Cost};{field.CostPerMeter};{field.Owner};{field.pH}";
-        }
-
         string ToText()
         {
             using (var engine = new TesseractEngine(@"./tessdata", "ces+eng", EngineMode.Default))
             {
-                Bitmap capturedImage = CaptureScreenRegion(new Rectangle(100, 100, 200, 200));
+                Bitmap capturedImage = CaptureScreenRegion(new Rectangle(x, y, width, height));
                 pictureBox1.Image = capturedImage;
                 string extractedText = PerformOCR(engine, capturedImage);
                 return extractedText;
@@ -100,7 +59,104 @@ namespace WinFormsApp1
         private void button2_Click(object sender, EventArgs e)
         {
             textBox5.Text = ToText();
+            sendLog("Performed successful OCR scan");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (capturing2)
+            {
+                capturing2 = false;
+                label4.BackColor = Color.White;
+                backgroundWorker1.CancelAsync();
+            }
+            if (!capturing)
+            {
+                capturing = true;
+                label3.BackColor = Color.LimeGreen;
+                backgroundWorker1.RunWorkerAsync();
+                backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+                sendLog("Started capturing Point1 position");
+            }
+            else
+            {
+                capturing = false;
+                label3.BackColor = Color.White;
+                backgroundWorker1.CancelAsync();
+                sendLog("Canceled capturing Point1 position");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (capturing)
+            {
+                capturing = false;
+                label3.BackColor = Color.White;
+                backgroundWorker1.CancelAsync();
+            }
+            if (!capturing2)
+            {
+                capturing2 = true;
+                label4.BackColor = Color.LimeGreen;
+                backgroundWorker1.RunWorkerAsync();
+                backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+                sendLog("Started capturing Point2 position");
+            }
+            else
+            {
+                capturing2 = false;
+                label4.BackColor = Color.White;
+                backgroundWorker1.CancelAsync();
+                sendLog("Canceled capturing Point2 position");
+            }
+        }
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!backgroundWorker1.CancellationPending)
+            {
+                if (MouseButtons == MouseButtons.Left)
+                {
+                    capturedPosition = Cursor.Position;
+                    backgroundWorker1.ReportProgress(0);
+                    backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
+                    backgroundWorker1.CancelAsync();
+                }
+            }
+        }
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (capturing)
+            {
+                label3.Text = $"{capturedPosition.Y};{capturedPosition.X}";
+                x = capturedPosition.X;
+                y = capturedPosition.Y;
+                sendLog("Captured Point1");
+            }
+            else if (capturing2)
+            {
+                label4.Text = $"{capturedPosition.Y};{capturedPosition.X}";
+                width = capturedPosition.X - x;
+                height = capturedPosition.Y - y;
+                sendLog("Captured Point2");
+            }
+
+            if (width <= 0 || height < 0)
+            {
+                width = 1;
+                height = 1;
+                MessageBox.Show("Point 1 has to be TOP LEFT corner of area, and Point 2 BOTTOM RIGHT corner.");
+                sendLog("Error when creating bitmap");
+            }
+
+            capturing = false;
+            capturing2 = false;
+            label3.BackColor = Color.White;
+            label4.BackColor = Color.White;
+        }
+        private void sendLog(string message)
+        {
+            listBox2.Items.Insert(0, $"|{DateTime.UtcNow.ToString("HH:mm:ss")}| {message}");
         }
     }
-
 }
