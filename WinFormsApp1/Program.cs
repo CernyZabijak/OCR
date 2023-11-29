@@ -1,3 +1,4 @@
+
 namespace WinFormsApp1
 {
     internal static class Program
@@ -8,9 +9,12 @@ namespace WinFormsApp1
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // You can configure Entity Framework and ChatGPT integration here.
+            // For simplicity, let's assume you've already configured your context.
+
             Application.Run(new Form1());
         }
     }

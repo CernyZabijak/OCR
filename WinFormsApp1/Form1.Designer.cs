@@ -42,6 +42,7 @@
             button3 = new Button();
             label3 = new Label();
             label4 = new Label();
+            comboBox1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -62,18 +63,21 @@
             // 
             // button2
             // 
+            button2.BackColor = Color.Gray;
             button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
             button2.Location = new Point(5, 531);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Size = new Size(95, 177);
             button2.TabIndex = 14;
-            button2.Text = "Perform OCR";
-            button2.UseVisualStyleBackColor = true;
+            button2.Text = "START";
+            button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
             // textBox5
             // 
+            textBox5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            textBox5.BackColor = Color.Silver;
             textBox5.Location = new Point(106, 531);
             textBox5.Margin = new Padding(3, 4, 3, 4);
             textBox5.Multiline = true;
@@ -84,6 +88,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
             pictureBox1.Location = new Point(106, 12);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
@@ -100,7 +105,7 @@
             // 
             // label1
             // 
-            label1.BackColor = SystemColors.ActiveBorder;
+            label1.BackColor = Color.Gray;
             label1.BorderStyle = BorderStyle.Fixed3D;
             label1.Location = new Point(14, 29);
             label1.Name = "label1";
@@ -118,6 +123,8 @@
             // 
             // listBox2
             // 
+            listBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            listBox2.BackColor = Color.Silver;
             listBox2.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             listBox2.FormattingEnabled = true;
             listBox2.ItemHeight = 18;
@@ -129,26 +136,29 @@
             // 
             // button1
             // 
+            button1.BackColor = Color.Gray;
             button1.Location = new Point(5, 211);
             button1.Name = "button1";
             button1.Size = new Size(97, 58);
             button1.TabIndex = 20;
             button1.Text = "Point 1";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // button3
             // 
+            button3.BackColor = Color.Gray;
             button3.Location = new Point(5, 310);
             button3.Name = "button3";
             button3.Size = new Size(97, 58);
             button3.TabIndex = 21;
             button3.Text = "Point 2";
-            button3.UseVisualStyleBackColor = true;
+            button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
             // label3
             // 
+            label3.BackColor = Color.Silver;
             label3.BorderStyle = BorderStyle.Fixed3D;
             label3.Location = new Point(5, 173);
             label3.Name = "label3";
@@ -159,6 +169,7 @@
             // 
             // label4
             // 
+            label4.BackColor = Color.Silver;
             label4.BorderStyle = BorderStyle.Fixed3D;
             label4.Location = new Point(5, 272);
             label4.Name = "label4";
@@ -167,11 +178,22 @@
             label4.Text = "0;0";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "OCR ONLY", "OCR+GPT", "GPT ONLY" });
+            comboBox1.Location = new Point(5, 374);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(95, 28);
+            comboBox1.TabIndex = 25;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(1313, 713);
+            Controls.Add(comboBox1);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(button3);
@@ -185,8 +207,8 @@
             Controls.Add(label1);
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            RightToLeft = RightToLeft.Yes;
-            Text = "Form1";
+            RightToLeft = RightToLeft.No;
+            Text = "v1.2";
             TopMost = true;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -208,5 +230,6 @@
         private Button button3;
         private Label label3;
         private Label label4;
+        private ComboBox comboBox1;
     }
 }
