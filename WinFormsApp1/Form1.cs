@@ -1,6 +1,13 @@
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.ComponentModel;
 using System.Drawing.Imaging;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text.Json;
 using Tesseract;
+using Whetstone.ChatGPT;
+using Whetstone.ChatGPT.Models;
 
 namespace WinFormsApp1
 {
@@ -14,9 +21,20 @@ namespace WinFormsApp1
         private int y;
         private int width = 1;
         private int height = 1;
+    [DllImport("user32.dll")]
+
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        private const uint SWP_NOSIZE = 0x0001;
+        private const uint SWP_NOMOVE = 0x0002;
+        private const int HWND_TOPMOST = -1;
+
+
         public Form1()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 0;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -56,10 +74,59 @@ namespace WinFormsApp1
         }
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            textBox5.Text = ToText();
+
+            if (comboBox1.SelectedIndex == 0) //ONLY OCR
+            {
+                textBox5.Text = "";
+                textBox5.Text = ToText();
             sendLog("Performed successful OCR scan");
+
+            } else if (comboBox1.SelectedIndex == 1) { //OCR + GPT
+                textBox5.Text = "";
+                var gptRequest = new ChatGPTCompletionRequest
+                    {
+                        Model = ChatGPT35Models.Davinci003,
+                        Prompt = $"napis velmi kratkou odpoved {ToText()}"
+                    };
+
+                try
+                {
+                    using IChatGPTClient client = new ChatGPTClient("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");
+
+                    var response = await client.CreateCompletionAsync(gptRequest);
+                    textBox5.Text = response?.GetCompletionText();
+                    sendLog("Performed successful GPT promt");
+
+                }
+                catch (Exception ex)
+                {
+                    sendLog(ex.ToString());
+                    Clipboard.SetText(ex.ToString());
+                }
+            } else if(comboBox1.SelectedIndex == 2) //GPT ONLY
+            {
+                var gptRequest = new ChatGPTCompletionRequest
+                {
+                    Model = ChatGPT35Models.Davinci003,
+                    Prompt = $"napis velmi kratkou odpoved {textBox5.Text}"
+                };
+
+                try
+                {
+                    using IChatGPTClient client = new ChatGPTClient("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");
+
+                    var response = await client.CreateCompletionAsync(gptRequest);
+                    textBox5.Text = response?.GetCompletionText();
+                    sendLog("Performed successful GPT promt");
+                }
+                catch (Exception ex)
+                {
+                    sendLog(ex.ToString());
+                    Clipboard.SetText(ex.ToString());
+                }
+            } 
         }
 
         private void button1_Click(object sender, EventArgs e)
